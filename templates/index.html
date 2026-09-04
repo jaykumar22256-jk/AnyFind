@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AnyFind - Find Anything, Anywhere</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+              <div class="logo">
+    <img src="{{ url_for('static', filename='logo.svg') }}" alt="AnyFind Logo">
+              </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="#">Categories</a>
+            <a href="#">About</a>
+        </nav>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <main>
+
+        <section class="home-hero">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    ✨ Intelligent Discovery Platform
+                </div>
+
+                <h1>
+                    Find Anything,
+                    <span>Anywhere.</span>
+                </h1>
+
+                <p>
+                    Discover universities, hospitals, schools,
+                    hotels, restaurants and more — all in one place.
+                </p>
+
+
+                <!-- SEARCH -->
+
+                <form class="main-search"
+                      action="/search"
+                      method="GET">
+
+                    <span class="search-icon">🔍</span>
+
+                    <input
+                        type="text"
+                        name="query"
+                        placeholder="What are you looking for?"
+                        required
+                    >
+
+                    <button type="submit">
+                        Search
+                    </button>
+
+                </form>
+
+
+                <p class="search-example">
+                    Try: "Universities in Gujarat offering AI and ML courses"
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CATEGORIES -->
+
+        <section class="home-categories">
+
+            <div class="section-heading">
+
+                <p class="small-text">
+                    EXPLORE
+                </p>
+
+                <h2>
+                    What are you looking for?
+                </h2>
+
+                <p>
+                    Search across multiple categories from one platform.
+                </p>
+
+            </div>
+
+
+            <div class="category-grid">
+
+
+                <div class="home-category-card">
+
+                    <div class="category-icon">
+                        🎓
+                    </div>
+
+                    <h3>Universities</h3>
+
+                    <p>
+                        Find universities, colleges and courses.
+                    </p>
+
+                </div>
+
+
+                <div class="home-category-card">
+
+                    <div class="category-icon">
+                        🏥
+                    </div>
+
+                    <h3>Hospitals</h3>
+
+                    <p>
+                        Find hospitals and medical specializations.
+                    </p>
+
+                </div>
+
+
+                <div class="home-category-card">
+
+                    <div class="category-icon">
+                        🏫
+                    </div>
+
+                    <h3>Schools</h3>
+
+                    <p>
+                        Discover schools and educational institutions.
+                    </p>
+
+                </div>
+
+
+                <div class="home-category-card">
+
+                    <div class="category-icon">
+                        🏨
+                    </div>
+
+                    <h3>Hotels</h3>
+
+                    <p>
+                        Find hotels and suitable places to stay.
+                    </p>
+
+                </div>
+
+
+                <div class="home-category-card">
+
+                    <div class="category-icon">
+                        🍽️
+                    </div>
+
+                    <h3>Restaurants</h3>
+
+                    <p>
+                        Discover restaurants and food options.
+                    </p>
+
+                </div>
+
+
+                <div class="home-category-card">
+
+                    <div class="category-icon">
+                        📍
+                    </div>
+
+                    <h3>More Places</h3>
+
+                    <p>
+                        Explore more services and locations.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI SECTION -->
+
+        <section class="ai-section">
+
+            <div class="ai-content">
+
+                <div class="ai-icon">
+                    ✨
+                </div>
+
+                <p class="small-text">
+                    AI-POWERED SEARCH
+                </p>
+
+                <h2>
+                    Search the way you think.
+                </h2>
+
+                <p>
+                    Instead of using complicated keywords,
+                    simply describe what you need in natural language.
+                </p>
+
+                <div class="ai-example">
+                    💬 "I need a hospital in Ahmedabad for heart treatment."
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-logo">
+            AnyFind
+        </div>
+
+        <p>
+            AI-Powered Intelligent Information Discovery
+        </p>
+
+        <p class="copyright">
+            © 2026 AnyFind. All rights reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

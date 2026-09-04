@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Search Results - AnyFind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/" class="logo-link">
+
+            <img src="{{ url_for('static', filename='logo.svg') }}"
+                 class="logo">
+
+            <span>AnyFind</span>
+
+        </a>
+
+
+        <a href="/" class="nav-link">
+            Home
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- SEARCH -->
+
+<main class="results-page">
+
+    <div class="results-header">
+
+        <h1>Search Results</h1>
+
+        {% if query %}
+
+        <p>
+            Results for:
+            <strong>{{ query }}</strong>
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- INTERPRETED QUERY -->
+
+    {% if interpreted_query %}
+
+    <div class="query-info">
+
+        <h3>AnyFind understood your search as:</h3>
+
+        {% if interpreted_query["category"] %}
+
+        <p>
+            <strong>Category:</strong>
+            {{ interpreted_query["category"] }}
+        </p>
+
+        {% endif %}
+
+
+        {% if interpreted_query["location"] %}
+
+        <p>
+            <strong>Location:</strong>
+            {{ interpreted_query["location"] }}
+        </p>
+
+        {% endif %}
+
+
+        {% if interpreted_query["requirements"] %}
+
+        <p>
+            <strong>Requirements:</strong>
+
+            {{ interpreted_query["requirements"] | join(", ") }}
+
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- RESULT COUNT -->
+
+    <p class="result-count">
+
+        {{ results|length }} result(s) found
+
+    </p>
+
+
+
+    <!-- RESULTS -->
+
+    {% if results %}
+
+
+        <div class="results-grid">
+
+
+            {% for result in results %}
+
+
+            <div class="result-card">
+
+
+                <!-- CATEGORY -->
+
+                <span class="category-badge">
+
+                    {{ result["category"] }}
+
+                </span>
+
+
+
+                <!-- NAME -->
+
+                <h2>
+
+                    {{ result["name"] }}
+
+                </h2>
+
+
+
+                <!-- LOCATION -->
+
+                {% if result["city"] or result["state"] %}
+
+                <p class="location">
+
+                    📍
+
+                    {% if result["city"] %}
+                        {{ result["city"] }}
+                    {% endif %}
+
+                    {% if result["state"] %}
+                        , {{ result["state"] }}
+                    {% endif %}
+
+                </p>
+
+                {% endif %}
+
+
+
+                <!-- DESCRIPTION -->
+
+                {% if result["description"] %}
+
+                <p>
+
+                    {{ result["description"] }}
+
+                </p>
+
+                {% endif %}
+
+
+
+                <!-- COURSES -->
+
+                {% if result["courses"] %}
+
+                <p>
+
+                    <strong>Courses:</strong>
+
+                    {{ result["courses"] }}
+
+                </p>
+
+                {% endif %}
+
+
+
+                <!-- SERVICES -->
+
+                {% if result["services"] %}
+
+                <p>
+
+                    <strong>Services:</strong>
+
+                    {{ result["services"] }}
+
+                </p>
+
+                {% endif %}
+
+
+
+                <!-- SPECIALTIES -->
+
+                {% if result["specialties"] %}
+
+                <p>
+
+                    <strong>Specialties:</strong>
+
+                    {{ result["specialties"] }}
+
+                </p>
+
+                {% endif %}
+
+
+
+                <!-- DETAILS BUTTON -->
+
+                <a href="{{ url_for('place_details', place_id=result['id']) }}"
+                   class="primary-button">
+
+                    View Details →
+
+                </a>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- NO RESULTS -->
+
+        <div class="no-results">
+
+            <h2>No results found 😕</h2>
+
+            <p>
+                Try searching with a different category,
+                location, or requirement.
+            </p>
+
+            <a href="/" class="primary-button">
+
+                ← Back to Search
+
+            </a>
+
+        </div>
+
+
+    {% endif %}
+
+
+</main>
+
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 AnyFind. Intelligent Discovery Platform.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

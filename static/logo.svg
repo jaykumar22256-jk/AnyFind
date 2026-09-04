@@ -1,0 +1,26 @@
+<svg width="190" height="55" viewBox="0 0 190 55" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Logo mark -->
+    <rect x="2" y="7" width="42" height="42" rx="12" fill="#2563EB"/>
+
+    <!-- A -->
+    <path
+        d="M13 39L21 17H25L33 39H28L26.5 34H19.5L18 39H13ZM21 30H25L23 23L21 30Z"
+        fill="white"
+    />
+
+    <!-- Search / discovery dot -->
+    <circle cx="35" cy="17" r="5" fill="#60A5FA"/>
+
+    <!-- Brand name -->
+    <text
+        x="54"
+        y="38"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="29"
+        font-weight="700"
+        fill="#172033">
+        AnyFind
+    </text>
+
+</svg>

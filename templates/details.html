@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ place["name"] }} - AnyFind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/" class="logo-link">
+
+            <img src="{{ url_for('static', filename='logo.svg') }}"
+                 class="logo">
+
+            <span>AnyFind</span>
+
+        </a>
+
+
+        <a href="/" class="nav-link">
+
+            Home
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<main class="details-page">
+
+
+    <div class="details-card">
+
+
+        <div class="details-header">
+
+
+            <span class="category-badge">
+
+                {{ place["category"] }}
+
+            </span>
+
+
+            <h1>
+
+                {{ place["name"] }}
+
+            </h1>
+
+
+            <p class="location">
+
+                📍 {{ place["address"] }}
+
+            </p>
+
+
+        </div>
+
+
+
+        {% if place["description"] %}
+
+        <section>
+
+            <h2>About</h2>
+
+            <p>
+
+                {{ place["description"] }}
+
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+
+        {% if place["courses"] %}
+
+        <section>
+
+            <h2>Courses</h2>
+
+            <p>
+
+                {{ place["courses"] }}
+
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+
+        {% if place["services"] %}
+
+        <section>
+
+            <h2>Services</h2>
+
+            <p>
+
+                {{ place["services"] }}
+
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+
+        {% if place["specialties"] %}
+
+        <section>
+
+            <h2>Specialties</h2>
+
+            <p>
+
+                {{ place["specialties"] }}
+
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+
+        {% if place["phone"] %}
+
+        <section>
+
+            <h2>Phone</h2>
+
+            <p>
+
+                {{ place["phone"] }}
+
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+
+        {% if place["website"] %}
+
+        <section>
+
+            <h2>Website</h2>
+
+            <p>
+
+                {{ place["website"] }}
+
+            </p>
+
+        </section>
+
+        {% endif %}
+
+
+
+        <a href="/" class="primary-button">
+
+            ← Back to Search
+
+        </a>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
