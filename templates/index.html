@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AnyFind - Find Anything, Anywhere</title>
+    <title>AnyFind — Discover Anything, Anywhere</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
@@ -13,246 +13,424 @@
 
 <body>
 
-    <!-- NAVBAR -->
+<!-- NAVBAR -->
+<header class="navbar">
+    <a href="/" class="brand">
+        <img src="{{ url_for('static', filename='logo.svg') }}"
+             alt="AnyFind">
+        <span>AnyFind</span>
+    </a>
 
-    <header class="navbar">
+    <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#ai-search">AI Search</a>
+        <a href="#about">About</a>
+    </nav>
 
-              <div class="logo">
-    <img src="{{ url_for('static', filename='logo.svg') }}" alt="AnyFind Logo">
-              </div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="#">Categories</a>
-            <a href="#">About</a>
-        </nav>
-
-    </header>
-
-
-    <!-- HERO -->
-
-    <main>
-
-        <section class="home-hero">
-
-            <div class="hero-content">
-
-                <div class="hero-badge">
-                    ✨ Intelligent Discovery Platform
-                </div>
-
-                <h1>
-                    Find Anything,
-                    <span>Anywhere.</span>
-                </h1>
-
-                <p>
-                    Discover universities, hospitals, schools,
-                    hotels, restaurants and more — all in one place.
-                </p>
+    <a href="#search" class="nav-button">Start Searching</a>
+</header>
 
 
-                <!-- SEARCH -->
+<!-- HERO -->
+<main>
 
-                <form class="main-search"
-                      action="/search"
-                      method="GET">
+<section class="hero" id="search">
 
-                    <span class="search-icon">🔍</span>
+    <div class="hero-glow glow-one"></div>
+    <div class="hero-glow glow-two"></div>
 
-                    <input
-                        type="text"
-                        name="query"
-                        placeholder="What are you looking for?"
-                        required
-                    >
+    <div class="hero-content">
 
-                    <button type="submit">
-                        Search
-                    </button>
+        <div class="status-pill">
+            <span class="status-dot"></span>
+            AI-POWERED DISCOVERY
+        </div>
 
-                </form>
+        <h1>
+            Find <span>Anything.</span><br>
+            Anywhere.
+        </h1>
 
+        <p class="hero-description">
+            One intelligent platform to discover universities,
+            hospitals, hotels, restaurants, services and more.
+        </p>
 
-                <p class="search-example">
-                    Try: "Universities in Gujarat offering AI and ML courses"
-                </p>
+        <!-- SEARCH -->
+        <form class="hero-search"
+              action="/search"
+              method="GET">
 
+            <div class="search-left">
+                <span class="search-symbol">⌕</span>
+
+                <input
+                    type="text"
+                    name="query"
+                    placeholder="What are you looking for?"
+                    required>
             </div>
 
-        </section>
+            <button type="submit">
+                Search
+                <span>→</span>
+            </button>
+
+        </form>
+
+        <div class="suggestions">
+            <span>Try:</span>
+
+            <a href="/search?query=Universities%20in%20Gujarat%20offering%20AI%20and%20ML">
+                Universities in Gujarat offering AI & ML
+            </a>
+
+            <a href="/search?query=Heart%20hospitals%20in%20Ahmedabad">
+                Heart hospitals in Ahmedabad
+            </a>
+        </div>
 
 
-        <!-- CATEGORIES -->
+        <!-- STATS -->
+        <div class="hero-stats">
 
-        <section class="home-categories">
-
-            <div class="section-heading">
-
-                <p class="small-text">
-                    EXPLORE
-                </p>
-
-                <h2>
-                    What are you looking for?
-                </h2>
-
-                <p>
-                    Search across multiple categories from one platform.
-                </p>
-
+            <div>
+                <strong>AI</strong>
+                <span>Smart Search</span>
             </div>
 
-
-            <div class="category-grid">
-
-
-                <div class="home-category-card">
-
-                    <div class="category-icon">
-                        🎓
-                    </div>
-
-                    <h3>Universities</h3>
-
-                    <p>
-                        Find universities, colleges and courses.
-                    </p>
-
-                </div>
-
-
-                <div class="home-category-card">
-
-                    <div class="category-icon">
-                        🏥
-                    </div>
-
-                    <h3>Hospitals</h3>
-
-                    <p>
-                        Find hospitals and medical specializations.
-                    </p>
-
-                </div>
-
-
-                <div class="home-category-card">
-
-                    <div class="category-icon">
-                        🏫
-                    </div>
-
-                    <h3>Schools</h3>
-
-                    <p>
-                        Discover schools and educational institutions.
-                    </p>
-
-                </div>
-
-
-                <div class="home-category-card">
-
-                    <div class="category-icon">
-                        🏨
-                    </div>
-
-                    <h3>Hotels</h3>
-
-                    <p>
-                        Find hotels and suitable places to stay.
-                    </p>
-
-                </div>
-
-
-                <div class="home-category-card">
-
-                    <div class="category-icon">
-                        🍽️
-                    </div>
-
-                    <h3>Restaurants</h3>
-
-                    <p>
-                        Discover restaurants and food options.
-                    </p>
-
-                </div>
-
-
-                <div class="home-category-card">
-
-                    <div class="category-icon">
-                        📍
-                    </div>
-
-                    <h3>More Places</h3>
-
-                    <p>
-                        Explore more services and locations.
-                    </p>
-
-                </div>
-
+            <div>
+                <strong>∞</strong>
+                <span>Possibilities</span>
             </div>
 
-        </section>
-
-
-        <!-- AI SECTION -->
-
-        <section class="ai-section">
-
-            <div class="ai-content">
-
-                <div class="ai-icon">
-                    ✨
-                </div>
-
-                <p class="small-text">
-                    AI-POWERED SEARCH
-                </p>
-
-                <h2>
-                    Search the way you think.
-                </h2>
-
-                <p>
-                    Instead of using complicated keywords,
-                    simply describe what you need in natural language.
-                </p>
-
-                <div class="ai-example">
-                    💬 "I need a hospital in Ahmedabad for heart treatment."
-                </div>
-
+            <div>
+                <strong>1</strong>
+                <span>Unified Platform</span>
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </div>
+
+</section>
 
 
-    <!-- FOOTER -->
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
 
-    <footer>
+    <div class="section-header">
 
-        <div class="footer-logo">
-            AnyFind
+        <div>
+            <p class="eyebrow">EXPLORE THE WORLD</p>
+
+            <h2>
+                One search.<br>
+                <span>Endless discoveries.</span>
+            </h2>
         </div>
 
         <p>
-            AI-Powered Intelligent Information Discovery
+            Explore places, institutions and services
+            across multiple categories.
         </p>
 
-        <p class="copyright">
-            © 2026 AnyFind. All rights reserved.
+    </div>
+
+
+    <div class="category-grid">
+
+        <a href="/search?query=Universities"
+           class="category-card">
+
+            <div class="category-number">01</div>
+            <div class="category-icon">🎓</div>
+
+            <h3>Universities</h3>
+
+            <p>
+                Universities, colleges, courses and programs.
+            </p>
+
+            <span class="card-arrow">↗</span>
+
+        </a>
+
+
+        <a href="/search?query=Hospitals"
+           class="category-card">
+
+            <div class="category-number">02</div>
+            <div class="category-icon">🏥</div>
+
+            <h3>Hospitals</h3>
+
+            <p>
+                Hospitals, specialties and healthcare services.
+            </p>
+
+            <span class="card-arrow">↗</span>
+
+        </a>
+
+
+        <a href="/search?query=Schools"
+           class="category-card">
+
+            <div class="category-number">03</div>
+            <div class="category-icon">🏫</div>
+
+            <h3>Schools</h3>
+
+            <p>
+                Discover schools and educational institutions.
+            </p>
+
+            <span class="card-arrow">↗</span>
+
+        </a>
+
+
+        <a href="/search?query=Hotels"
+           class="category-card">
+
+            <div class="category-number">04</div>
+            <div class="category-icon">🏨</div>
+
+            <h3>Hotels</h3>
+
+            <p>
+                Find places to stay based on your needs.
+            </p>
+
+            <span class="card-arrow">↗</span>
+
+        </a>
+
+
+        <a href="/search?query=Restaurants"
+           class="category-card">
+
+            <div class="category-number">05</div>
+            <div class="category-icon">🍽️</div>
+
+            <h3>Restaurants</h3>
+
+            <p>
+                Discover restaurants and food options.
+            </p>
+
+            <span class="card-arrow">↗</span>
+
+        </a>
+
+
+        <a href="#search"
+           class="category-card special-card">
+
+            <div class="category-number">06</div>
+            <div class="category-icon">✦</div>
+
+            <h3>Anything Else</h3>
+
+            <p>
+                If you can describe it, AnyFind can search for it.
+            </p>
+
+            <span class="card-arrow">↗</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- AI SECTION -->
+<section class="ai-section" id="ai-search">
+
+    <div class="ai-grid">
+
+        <div class="ai-text">
+
+            <p class="eyebrow">INTELLIGENT SEARCH ENGINE</p>
+
+            <h2>
+                Search the way<br>
+                <span>you think.</span>
+            </h2>
+
+            <p>
+                Forget complicated keywords. Tell AnyFind what
+                you need in natural language and let our intelligent
+                search system understand your requirements.
+            </p>
+
+            <div class="ai-features">
+
+                <div>
+                    <span>✦</span>
+                    <strong>Natural Language</strong>
+                    <small>Ask questions normally.</small>
+                </div>
+
+                <div>
+                    <span>⌖</span>
+                    <strong>Location Aware</strong>
+                    <small>Find relevant places nearby.</small>
+                </div>
+
+                <div>
+                    <span>◈</span>
+                    <strong>Smart Ranking</strong>
+                    <small>Relevant results first.</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI DEMO -->
+        <div class="ai-demo">
+
+            <div class="demo-top">
+                <div class="window-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <span>AnyFind AI</span>
+
+                <span>✦</span>
+            </div>
+
+
+            <div class="chat-area">
+
+                <div class="user-message">
+                    I need a hospital in Ahmedabad
+                    for heart treatment.
+                </div>
+
+                <div class="ai-message">
+
+                    <div class="ai-avatar">✦</div>
+
+                    <div>
+                        <strong>AnyFind AI</strong>
+
+                        <p>
+                            I understood that you're looking
+                            for a hospital in Ahmedabad with
+                            cardiology / heart-treatment services.
+                        </p>
+
+                        <div class="understood-tags">
+                            <span>Hospital</span>
+                            <span>Ahmedabad</span>
+                            <span>Cardiology</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+
+    <div class="about-card">
+
+        <div class="about-symbol">✦</div>
+
+        <p class="eyebrow">THE VISION</p>
+
+        <h2>
+            Making information<br>
+            <span>easier to discover.</span>
+        </h2>
+
+        <p>
+            AnyFind is an intelligent information discovery
+            platform designed to connect people with the
+            places, institutions and services they need.
         </p>
 
-    </footer>
+        <a href="#search" class="about-button">
+            Explore AnyFind →
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="site-footer">
+
+    <div class="footer-main">
+
+        <div class="footer-brand">
+
+            <a href="/" class="brand footer-brand-link">
+
+                <img src="{{ url_for('static', filename='logo.svg') }}"
+                     alt="AnyFind">
+
+                <span>AnyFind</span>
+
+            </a>
+
+            <p>
+                AI-powered intelligent information discovery.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <div>
+                <strong>Explore</strong>
+                <a href="#categories">Categories</a>
+                <a href="#ai-search">AI Search</a>
+                <a href="#about">About</a>
+            </div>
+
+            <div>
+                <strong>Platform</strong>
+                <a href="/">Home</a>
+                <a href="#search">Search</a>
+                <a href="#categories">Discover</a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>© 2026 AnyFind</span>
+
+        <span>Intelligent Discovery Platform</span>
+
+    </div>
+
+</footer>
+
 
 </body>
-
 </html>
