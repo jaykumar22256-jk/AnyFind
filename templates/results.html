@@ -5,7 +5,8 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Search Results - AnyFind</title>
 
@@ -18,16 +19,16 @@
 <body>
 
 
-<!-- NAVBAR -->
-
 <nav class="navbar">
 
     <div class="nav-container">
 
         <a href="/" class="logo-link">
 
-            <img src="{{ url_for('static', filename='logo.svg') }}"
-                 class="logo">
+            <img
+                src="{{ url_for('static', filename='logo.svg') }}"
+                class="logo"
+            >
 
             <span>AnyFind</span>
 
@@ -43,10 +44,8 @@
 </nav>
 
 
-
-<!-- SEARCH -->
-
 <main class="results-page">
+
 
     <div class="results-header">
 
@@ -64,20 +63,23 @@
     </div>
 
 
-
-    <!-- INTERPRETED QUERY -->
-
     {% if interpreted_query %}
 
     <div class="query-info">
 
-        <h3>AnyFind understood your search as:</h3>
+        <h3>
+            🤖 AnyFind AI understood your search
+        </h3>
+
 
         {% if interpreted_query["category"] %}
 
         <p>
+
             <strong>Category:</strong>
+
             {{ interpreted_query["category"] }}
+
         </p>
 
         {% endif %}
@@ -86,8 +88,11 @@
         {% if interpreted_query["location"] %}
 
         <p>
+
             <strong>Location:</strong>
+
             {{ interpreted_query["location"] }}
+
         </p>
 
         {% endif %}
@@ -96,6 +101,7 @@
         {% if interpreted_query["requirements"] %}
 
         <p>
+
             <strong>Requirements:</strong>
 
             {{ interpreted_query["requirements"] | join(", ") }}
@@ -109,9 +115,6 @@
     {% endif %}
 
 
-
-    <!-- RESULT COUNT -->
-
     <p class="result-count">
 
         {{ results|length }} result(s) found
@@ -119,22 +122,31 @@
     </p>
 
 
-
-    <!-- RESULTS -->
-
     {% if results %}
 
 
-        <div class="results-grid">
+    <div class="results-grid">
 
 
-            {% for result in results %}
+        {% for item in results %}
 
 
-            <div class="result-card">
+        {% set result = item["place"] %}
+
+        {% set score = item["score"] %}
 
 
-                <!-- CATEGORY -->
+        <div class="result-card">
+
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:10px;
+                margin-bottom:15px;
+            ">
+
 
                 <span class="category-badge">
 
@@ -143,141 +155,146 @@
                 </span>
 
 
+                <span style="
+                    font-size:13px;
+                    font-weight:700;
+                    padding:7px 10px;
+                    border-radius:20px;
+                    background:rgba(99,102,241,0.12);
+                    color:#6366f1;
+                ">
 
-                <!-- NAME -->
+                    {{ score }} Match Score
 
-                <h2>
-
-                    {{ result["name"] }}
-
-                </h2>
-
-
-
-                <!-- LOCATION -->
-
-                {% if result["city"] or result["state"] %}
-
-                <p class="location">
-
-                    📍
-
-                    {% if result["city"] %}
-                        {{ result["city"] }}
-                    {% endif %}
-
-                    {% if result["state"] %}
-                        , {{ result["state"] }}
-                    {% endif %}
-
-                </p>
-
-                {% endif %}
-
-
-
-                <!-- DESCRIPTION -->
-
-                {% if result["description"] %}
-
-                <p>
-
-                    {{ result["description"] }}
-
-                </p>
-
-                {% endif %}
-
-
-
-                <!-- COURSES -->
-
-                {% if result["courses"] %}
-
-                <p>
-
-                    <strong>Courses:</strong>
-
-                    {{ result["courses"] }}
-
-                </p>
-
-                {% endif %}
-
-
-
-                <!-- SERVICES -->
-
-                {% if result["services"] %}
-
-                <p>
-
-                    <strong>Services:</strong>
-
-                    {{ result["services"] }}
-
-                </p>
-
-                {% endif %}
-
-
-
-                <!-- SPECIALTIES -->
-
-                {% if result["specialties"] %}
-
-                <p>
-
-                    <strong>Specialties:</strong>
-
-                    {{ result["specialties"] }}
-
-                </p>
-
-                {% endif %}
-
-
-
-                <!-- DETAILS BUTTON -->
-
-                <a href="{{ url_for('place_details', place_id=result['id']) }}"
-                   class="primary-button">
-
-                    View Details →
-
-                </a>
+                </span>
 
 
             </div>
 
 
-            {% endfor %}
+            <h2>
+
+                {{ result["name"] }}
+
+            </h2>
+
+
+            {% if result["city"] or result["state"] %}
+
+            <p class="location">
+
+                📍
+
+                {% if result["city"] %}
+                    {{ result["city"] }}
+                {% endif %}
+
+                {% if result["state"] %}
+                    , {{ result["state"] }}
+                {% endif %}
+
+            </p>
+
+            {% endif %}
+
+
+            {% if result["description"] %}
+
+            <p>
+
+                {{ result["description"] }}
+
+            </p>
+
+            {% endif %}
+
+
+            {% if result["courses"] %}
+
+            <p>
+
+                <strong>Courses:</strong>
+
+                {{ result["courses"] }}
+
+            </p>
+
+            {% endif %}
+
+
+            {% if result["services"] %}
+
+            <p>
+
+                <strong>Services:</strong>
+
+                {{ result["services"] }}
+
+            </p>
+
+            {% endif %}
+
+
+            {% if result["specialties"] %}
+
+            <p>
+
+                <strong>Specialties:</strong>
+
+                {{ result["specialties"] }}
+
+            </p>
+
+            {% endif %}
+
+
+            <a
+                href="{{ url_for(
+                    'place_details',
+                    place_id=result['id']
+                ) }}"
+                class="primary-button"
+            >
+
+                View Details →
+
+            </a>
 
 
         </div>
+
+
+        {% endfor %}
+
+
+    </div>
 
 
     {% else %}
 
 
-        <!-- NO RESULTS -->
+    <div class="no-results">
 
-        <div class="no-results">
+        <h2>No results found 😕</h2>
 
-            <h2>No results found 😕</h2>
+        <p>
 
-            <p>
-                Try searching with a different category,
-                location, or requirement.
-            </p>
+            Try searching with a different category,
+            location, or requirement.
 
-            <a href="/" class="primary-button">
+        </p>
 
-                ← Back to Search
 
-            </a>
+        <a
+            href="/"
+            class="primary-button"
+        >
 
-        </div>
+            ← Back to Search
+
+        </a>
+
+    </div>
 
 
     {% endif %}
@@ -286,13 +303,13 @@
 </main>
 
 
-
-<!-- FOOTER -->
-
 <footer class="footer">
 
     <p>
-        © 2026 AnyFind. Intelligent Discovery Platform.
+
+        © 2026 AnyFind.
+        Intelligent Discovery Platform.
+
     </p>
 
 </footer>

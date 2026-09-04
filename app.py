@@ -26,7 +26,7 @@ def get_db_connection():
 
 
 # =========================
-# HOME PAGE
+# HOME
 # =========================
 
 @app.route("/")
@@ -46,14 +46,6 @@ def search():
 
     interpreted_query = understand_query(query)
 
-    print("Original query:", query)
-
-    print("Interpreted query:", interpreted_query)
-
-
-    connection = get_db_connection()
-
-
     category = interpreted_query["category"]
 
     location = interpreted_query["location"]
@@ -61,12 +53,15 @@ def search():
     requirements = interpreted_query["requirements"]
 
 
+    connection = get_db_connection()
+
+
+    # Start with every place
     sql = """
         SELECT *
         FROM places
         WHERE 1=1
     """
-
 
     parameters = []
 
@@ -77,7 +72,9 @@ def search():
 
     if category:
 
-        sql += " AND category LIKE ?"
+        sql += """
+            AND category LIKE ?
+        """
 
         parameters.append(
             f"%{category}%"
@@ -94,16 +91,15 @@ def search():
             AND (
                 city LIKE ?
                 OR state LIKE ?
+                OR address LIKE ?
             )
         """
 
-        parameters.append(
+        parameters.extend([
+            f"%{location}%",
+            f"%{location}%",
             f"%{location}%"
-        )
-
-        parameters.append(
-            f"%{location}%"
-        )
+        ])
 
 
     # =========================
@@ -121,11 +117,13 @@ def search():
             )
         """
 
+        search_value = f"%{requirement}%"
+
         parameters.extend([
-            f"%{requirement}%",
-            f"%{requirement}%",
-            f"%{requirement}%",
-            f"%{requirement}%"
+            search_value,
+            search_value,
+            search_value,
+            search_value
         ])
 
 
@@ -139,7 +137,7 @@ def search():
 
 
     # =========================
-    # RELEVANCE RANKING
+    # AI RELEVANCE RANKING
     # =========================
 
     ranked_results = []
@@ -150,7 +148,10 @@ def search():
         score = 0
 
 
-        # Category match
+        # -------------------------
+        # CATEGORY SCORE
+        # -------------------------
+
         if category:
 
             if place["category"]:
@@ -160,27 +161,37 @@ def search():
                     score += 30
 
 
-        # Location match
+        # -------------------------
+        # LOCATION SCORE
+        # -------------------------
+
         if location:
 
             if place["city"]:
 
-                if location.lower() in place["city"].lower():
+                if location.lower() == place["city"].lower():
 
                     score += 30
 
-
-            if place["state"]:
-
-                if location.lower() in place["state"].lower():
+                elif location.lower() in place["city"].lower():
 
                     score += 20
 
 
-        # Requirement match
+            if place["state"]:
+
+                if location.lower() == place["state"].lower():
+
+                    score += 20
+
+
+        # -------------------------
+        # REQUIREMENT SCORE
+        # -------------------------
+
         for requirement in requirements:
 
-            requirement = requirement.lower()
+            requirement_lower = requirement.lower()
 
 
             fields = [
@@ -196,36 +207,56 @@ def search():
             ]
 
 
+            matched = False
+
+
             for field in fields:
 
-                if requirement in field.lower():
+                if requirement_lower in field.lower():
 
                     score += 10
+
+                    matched = True
 
                     break
 
 
+            if not matched:
+
+                # Try individual words
+                words = requirement_lower.split()
+
+                for field in fields:
+
+                    field_lower = field.lower()
+
+                    if any(
+                        word in field_lower
+                        for word in words
+                        if len(word) > 2
+                    ):
+
+                        score += 5
+
+                        break
+
+
         ranked_results.append(
-            (score, place)
+            {
+                "place": place,
+                "score": score
+            }
         )
 
 
-    # Highest score first
+    # =========================
+    # SORT RESULTS
+    # =========================
+
     ranked_results.sort(
-        key=lambda item: item[0],
+        key=lambda item: item["score"],
         reverse=True
     )
-
-
-    final_results = [
-
-        place
-
-        for score, place
-
-        in ranked_results
-
-    ]
 
 
     return render_template(
@@ -233,14 +264,14 @@ def search():
 
         query=query,
 
-        results=final_results,
+        results=ranked_results,
 
         interpreted_query=interpreted_query
     )
 
 
 # =========================
-# PLACE DETAILS
+# DETAILS
 # =========================
 
 @app.route("/place/<int:place_id>")
@@ -281,6 +312,11 @@ if __name__ == "__main__":
 
     app.run(
         host="0.0.0.0",
-        port=int(os.environ.get("PORT", 5000)),
+        port=int(
+            os.environ.get(
+                "PORT",
+                5000
+            )
+        ),
         debug=True
     )

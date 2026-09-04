@@ -1,60 +1,162 @@
+import re
+
+
+CATEGORIES = {
+    "University": [
+        "university",
+        "universities",
+        "college",
+        "colleges",
+        "engineering college",
+        "engineering colleges"
+    ],
+    "Hospital": [
+        "hospital",
+        "hospitals",
+        "clinic",
+        "clinics"
+    ],
+    "School": [
+        "school",
+        "schools"
+    ],
+    "Hotel": [
+        "hotel",
+        "hotels"
+    ],
+    "Restaurant": [
+        "restaurant",
+        "restaurants",
+        "food",
+        "cafe",
+        "cafes"
+    ],
+    "Bank": [
+        "bank",
+        "banks"
+    ],
+    "Tourist Place": [
+        "tourist",
+        "tourist place",
+        "tourist places",
+        "tourism",
+        "attraction",
+        "attractions"
+    ]
+}
+
+
+LOCATIONS = [
+    "Ahmedabad",
+    "Mehsana",
+    "Surat",
+    "Vadodara",
+    "Rajkot",
+    "Gandhinagar",
+    "Bhavnagar",
+    "Anand",
+    "Patan",
+    "Kutch",
+    "Gujarat"
+]
+
+
+REQUIREMENTS = {
+    "Artificial Intelligence": [
+        "ai",
+        "artificial intelligence"
+    ],
+    "Machine Learning": [
+        "ml",
+        "machine learning"
+    ],
+    "Computer Science": [
+        "computer science",
+        "cse"
+    ],
+    "Information Technology": [
+        "information technology",
+        "it"
+    ],
+    "Cardiology": [
+        "heart",
+        "cardiology",
+        "cardiac"
+    ],
+    "Cancer Treatment": [
+        "cancer",
+        "oncology"
+    ],
+    "Emergency": [
+        "emergency",
+        "emergency treatment"
+    ]
+}
+
+
 def understand_query(query):
 
-    query = query.lower()
+    query = query.lower().strip()
 
     result = {
+        "original_query": query,
         "category": None,
         "location": None,
         "requirements": []
     }
 
+    # -------------------------
     # CATEGORY DETECTION
+    # -------------------------
 
-    if "university" in query or "universities" in query or "college" in query or "colleges" in query:
-        result["category"] = "University"
+    for category, keywords in CATEGORIES.items():
 
-    elif "hospital" in query or "hospitals" in query:
-        result["category"] = "Hospital"
+        for keyword in keywords:
 
-    elif "school" in query or "schools" in query:
-        result["category"] = "School"
+            if keyword in query:
 
-    elif "hotel" in query or "hotels" in query:
-        result["category"] = "Hotel"
+                result["category"] = category
+                break
 
-    elif "restaurant" in query or "restaurants" in query:
-        result["category"] = "Restaurant"
-
-
-    # LOCATION DETECTION
-
-    locations = [
-        "ahmedabad",
-        "mehsana",
-        "surat",
-        "vadodara",
-        "rajkot",
-        "gandhinagar",
-        "gujarat"
-    ]
-
-    for location in locations:
-
-        if location in query:
-            result["location"] = location.title()
+        if result["category"]:
             break
 
 
+    # -------------------------
+    # LOCATION DETECTION
+    # -------------------------
+
+    for location in LOCATIONS:
+
+        if location.lower() in query:
+
+            result["location"] = location
+            break
+
+
+    # -------------------------
     # REQUIREMENT DETECTION
+    # -------------------------
 
-    if "ai" in query or "artificial intelligence" in query:
-        result["requirements"].append("Artificial Intelligence")
+    for requirement, keywords in REQUIREMENTS.items():
 
-    if "machine learning" in query or "ml" in query:
-        result["requirements"].append("Machine Learning")
+        for keyword in keywords:
 
-    if "heart" in query or "cardiology" in query:
-        result["requirements"].append("Cardiology")
+            # Word boundary avoids matching "it"
+            # inside unrelated words.
+            if keyword == "it":
+
+                if re.search(r"\bit\b", query):
+
+                    result["requirements"].append(requirement)
+
+                    break
+
+            elif keyword in query:
+
+                result["requirements"].append(requirement)
+
+                break
 
 
     return result
